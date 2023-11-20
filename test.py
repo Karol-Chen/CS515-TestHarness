@@ -6,8 +6,13 @@ def run_test(program, test_name):
     print(input_file)
     expected_output_file = f"./test/{program}.{test_name}.out"
     expected_arg_output_file = f"./test/{program}.{test_name}.arg.out"
-
-    args=f"python ./prog/{program}.py -f {input_file}"
+    args=None
+    if(program=="gron"):
+        args=f"python ./prog/{program}.py -f {input_file}"
+    if(program=="wc"):
+        args=f"python ./prog/{program}.py -l -w -c {input_file}"
+    if(program=="csv_sum"):
+        args=f"python ./prog/{program}.py {input_file} age,salary"
     try:
         with open(input_file, 'r') as f:
             input_data = f.read()
@@ -16,11 +21,8 @@ def run_test(program, test_name):
         exit_code = process.returncode
 
         if os.path.exists(expected_output_file):
-            print("过if了")
             with open(expected_output_file, 'r') as f:
-                print("open")
                 expected_output = f.read()
-                print(output)
                 assert output == expected_output, "OutputMismatch"
 
         if os.path.exists(expected_arg_output_file):
@@ -57,3 +59,5 @@ def run_tests(program):
 if __name__ == "__main__":
     program_name = "gron"
     run_tests(program_name)
+    run_tests("csv_sum")
+    run_tests("wc")

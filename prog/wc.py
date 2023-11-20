@@ -10,13 +10,22 @@ def read_content_from_file(filename):
     except Exception as e:
         raise Exception(f"Error reading file: {e}")
 
-def word_count(string):
+def word_count(string, count_lines=True, count_words=True, count_chars=True):
     if string is None:
         raise TypeError("Input cannot be None")
-    word = len(string.split())
-    line = string.count('\n') + 1
-    char = len(string)
-    return f"{line}  {word}  {char}"
+
+    lines, words, chars = 0, 0, 0
+
+    if count_lines:
+        lines = string.count('\n') + 1
+
+    if count_words:
+        words = len(string.split())
+
+    if count_chars:
+        chars = len(string)
+
+    return lines, words, chars
 
 def main():
     parser = argparse.ArgumentParser(
@@ -24,33 +33,39 @@ def main():
         description='Count lines, words, and characters of the input',
         epilog='Thank you :)'
     )
-    parser.add_argument('-f', '--filename')
-    parser.add_argument('-c', '--content')
+    parser.add_argument('files', nargs='+', help='Input files')
+    parser.add_argument('-l', '--lines', action='store_true', help='Count lines only')
+    parser.add_argument('-w', '--words', action='store_true', help='Count words only')
+    parser.add_argument('-c', '--chars', action='store_true', help='Count characters only')
     args = parser.parse_args()
 
-    file_content = None
-    content = None
+    if not any([args.lines, args.words, args.chars]):
+        # If no flags are provided, default to counting all
+        args.lines, args.words, args.chars = True, True, True
 
-    if args.filename:
+    for filename in args.files:
         try:
-            file_content = read_content_from_file(args.filename)
+            file_content = read_content_from_file(filename)
+            lines, words, chars = word_count(file_content, args.lines, args.words, args.chars)
+
+            output = ''
+            if args.lines:
+                output += f"{lines}\t"
+
+            if args.words:
+                output += f"{words}\t"
+
+            if args.chars:
+                output += f"{chars}\t"
+
+            print(f"{output}{filename}")
+
         except FileNotFoundError:
-            print(f"Error: File {args.filename} could not be found")
+            print(f"Error: File {filename} could not be found")
             sys.exit(1)
         except Exception as e:
             print(f"Error: {e}")
             sys.exit(1)
-
-    if args.content:
-        content = args.content
-
-    if content:
-        sys.stdout.write(f"{word_count(content)}")
-
-    if file_content:
-        sys.stdout.write(f"{word_count(file_content)}")
-
-    sys.exit(0)
 
 if __name__ == "__main__":
     main()
