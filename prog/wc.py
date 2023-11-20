@@ -41,7 +41,6 @@ def main():
     args = parser.parse_args()
 
     if not any([args.lines, args.words, args.chars]):
-        # If no flags are provided, default to counting all
         args.lines, args.words, args.chars = True, True, True
 
     for filename in args.files:

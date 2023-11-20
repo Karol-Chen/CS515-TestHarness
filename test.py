@@ -2,17 +2,17 @@ import os
 import subprocess
 
 def run_test(program, test_name):
-    input_file = f"./test/{program}.{test_name}.in"
+    input_file = f"test/{program}.{test_name}.in"
     print(input_file)
-    expected_output_file = f"./test/{program}.{test_name}.out"
-    expected_arg_output_file = f"./test/{program}.{test_name}.arg.out"
+    expected_output_file = f"test/{program}.{test_name}.out"
+    expected_arg_output_file = f"test/{program}.{test_name}.arg.out"
     args=None
     if(program=="gron"):
-        args=f"python ./prog/{program}.py -f {input_file}"
+        args=f"python prog/{program}.py -f {input_file}"
     if(program=="wc"):
-        args=f"python ./prog/{program}.py -l -w -c {input_file}"
+        args=f"python prog/{program}.py -l -w -c {input_file}"
     if(program=="csv_sum"):
-        args=f"python ./prog/{program}.py {input_file} age,salary"
+        args=f"python prog/{program}.py {input_file} age,salary"
     try:
         with open(input_file, 'r') as f:
             input_data = f.read()

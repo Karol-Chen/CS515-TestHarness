@@ -7,11 +7,9 @@ def sum_columns(csv_file, columns_to_sum, output_file):
         df = pd.read_csv(csv_file)
         result = df[columns_to_sum].sum()
 
-        # Print the sum to the console
         print(f"Sum of columns {columns_to_sum}:")
         print(result)
 
-        # Save the sum result to the output CSV file
         result.to_csv(output_file, header=True, index=False)
         print(f"Sum result saved to {output_file}")
 
