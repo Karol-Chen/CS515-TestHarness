@@ -15,7 +15,8 @@ def main():
             with open(args.filename, "r") as file:
                 file_content = file.read()
         except FileNotFoundError:
-            raise FileNotFoundError(f"File {args.filename} could not be found")
+            print(f"File {args.filename} could not be found")
+            sys.exit(1)
 
     if args.content:
         content = args.content
@@ -23,16 +24,25 @@ def main():
     type_dict = {"<class 'list'>": '[]', "<class 'set'>": '{}', "<class 'dict'>": "{}", "<class 'tuple'>": "()"}
 
     if content:
-        result = gron(content, type_dict)
-        sys.stdout.write(result)
-        with open("../test/gron.json1.out", "w") as output_file:
-            output_file.write(result)
+        try:
+            result = gron(content, type_dict)
+            sys.stdout.write(result)
+            with open("../test/gron.json1.out", "w") as output_file:
+                output_file.write(result)
+        except Exception as e:
+            print(f"Error: {e}")
+            sys.exit(1)
 
     if file_content:
-        result = gron(file_content, type_dict)
-        sys.stdout.write(result)
-        with open("../test/gron.json1.out", "w") as output_file:
-            output_file.write(result)
+        try:
+            result = gron(file_content, type_dict)
+            sys.stdout.write(result)
+            with open("../test/gron.json1.out", "w") as output_file:
+                output_file.write(result)
+        except Exception as e:
+            print(f"Error: {e}")
+            sys.exit(1)
+
 
 def gron(string, type_dict):
     if string is None:

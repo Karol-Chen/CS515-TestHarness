@@ -1,43 +1,14 @@
-# import sys
-# import argparse
-
-# parser = argparse.ArgumentParser(
-#                     prog='wc',
-#                     description='it counts the lines, words and characters of the input',
-#                     epilog='thank you:)')
-# parser.add_argument('-f','--filename')
-# parser.add_argument('-c','--content')
-# args=parser.parse_args()
-# print(args.filename,args.content)
-# file_content=None
-# content=None
-
-# if(args.filename):
-#     try:
-#         with open(args.filename,"r") as file:
-#             file_content=file.read()
-#     except:
-#         raise FileNotFoundError(f"file {args.filename} could not be found")
-
-# if(args.content):
-#     content=args.content
-
-# def word_count(string):
-#     if string is None:
-#         raise TypeError("input could not be None")
-#     word=len(string.split())
-#     line=string.count('\n')+1
-#     char=len(string)
-#     return f"{line}  {word}  {char}"
-
-# if content:
-#     sys.stdout.write(f"{word_count(content)}")
-# if file_content:
-#     sys.stdout.write(f"{word_count(file_content)}")
-# # sys.stdout.write(f"{word_count(content)}\n{word_count(file_content)}")
-
 import sys
 import argparse
+
+def read_content_from_file(filename):
+    try:
+        with open(filename, "r") as file:
+            return file.read()
+    except FileNotFoundError:
+        raise FileNotFoundError(f"File {filename} could not be found")
+    except Exception as e:
+        raise Exception(f"Error reading file: {e}")
 
 def word_count(string):
     if string is None:
@@ -57,17 +28,18 @@ def main():
     parser.add_argument('-c', '--content')
     args = parser.parse_args()
 
-    print(args.filename, args.content)
-
     file_content = None
     content = None
 
     if args.filename:
         try:
-            with open(args.filename, "r") as file:
-                file_content = file.read()
+            file_content = read_content_from_file(args.filename)
         except FileNotFoundError:
-            raise FileNotFoundError(f"File {args.filename} could not be found")
+            print(f"Error: File {args.filename} could not be found")
+            sys.exit(1)
+        except Exception as e:
+            print(f"Error: {e}")
+            sys.exit(1)
 
     if args.content:
         content = args.content
@@ -77,6 +49,8 @@ def main():
 
     if file_content:
         sys.stdout.write(f"{word_count(file_content)}")
+
+    sys.exit(0)
 
 if __name__ == "__main__":
     main()
