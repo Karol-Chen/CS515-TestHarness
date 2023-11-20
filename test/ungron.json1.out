@@ -1,0 +1,24 @@
+{
+  "json": {
+    "menu": {
+      "popup": {
+        "menuitem": [
+          {
+            "onclick": "CreateNewDoc()"
+          },
+          {
+            "onclick": "OpenDoc()"
+          },
+          {
+            "value": "Open"
+          },
+          {},
+          {
+            "value": "New"
+          },
+          {}
+        ]
+      }
+    }
+  }
+}
