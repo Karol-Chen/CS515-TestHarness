@@ -1,0 +1,12 @@
+json = {};
+json.menu = {};
+json.menu.id = file;
+json.menu.value = File;
+json.menu.popup = {};
+json.menu.popup.menuitem = [];
+json.menu.popup.menuitem[0] = {};
+json.menu.popup.menuitem[0].value = New;
+json.menu.popup.menuitem[0].onclick = CreateNewDoc();
+json.menu.popup.menuitem[1] = {};
+json.menu.popup.menuitem[1].value = Open;
+json.menu.popup.menuitem[1].onclick = OpenDoc();
