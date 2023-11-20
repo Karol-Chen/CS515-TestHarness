@@ -8,10 +8,6 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: CS515-TESTHARNESS
-
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
