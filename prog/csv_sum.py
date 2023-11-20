@@ -6,15 +6,20 @@ def sum_columns(csv_file, columns_to_sum, output_file):
     try:
         df = pd.read_csv(csv_file)
         result = df[columns_to_sum].sum()
+
+        # Print the sum to the console
         print(f"Sum of columns {columns_to_sum}:")
         print(result)
-        result.to_csv(output_file, header=True)
+
+        # Save the sum result to the output CSV file
+        result.to_csv(output_file, header=True, index=False)
         print(f"Sum result saved to {output_file}")
-        sys.exit(0)  
+
+        sys.exit(0)
 
     except Exception as e:
         print(f"Error: {e}")
-        sys.exit(1)  
+        sys.exit(1)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Sum specified columns in a CSV file")

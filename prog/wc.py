@@ -37,6 +37,7 @@ def main():
     parser.add_argument('-l', '--lines', action='store_true', help='Count lines only')
     parser.add_argument('-w', '--words', action='store_true', help='Count words only')
     parser.add_argument('-c', '--chars', action='store_true', help='Count characters only')
+    parser.add_argument('-o', '--output_file', default=None, help='Output file to write results')
     args = parser.parse_args()
 
     if not any([args.lines, args.words, args.chars]):
@@ -58,7 +59,11 @@ def main():
             if args.chars:
                 output += f"{chars}\t"
 
-            print(f"{output}{filename}")
+            if args.output_file:
+                with open(args.output_file, 'a') as output_file:
+                    output_file.write(f"{output}{filename}\n")
+            else:
+                print(f"{output}{filename}")
 
         except FileNotFoundError:
             print(f"Error: File {filename} could not be found")
