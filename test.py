@@ -1,6 +1,6 @@
 import os
 import subprocess
-
+os.chdir(os.path.dirname(os.path.abspath(__file__)))
 def run_test(program, test_name):
     input_file = f"test/{program}.{test_name}.in"
     print(input_file)
